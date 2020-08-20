@@ -1,0 +1,49 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container h-100">
+      <div class="d-flex justify-content-center h-100">
+        <div class="searchbar">
+          <input class="search_input" type="text" name="query" placeholder="Search...">
+          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        </div>
+      </div>
+    </div>
+
+  <div class="input-group md-form form-sm form-2 pl-0">
+  <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search">
+  <div class="input-group-append">
+    <span class="input-group-text red lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
+        aria-hidden="true"></i></span>
+  </div>
+</div>
+  </body>
+</html>
+<div id="main-body-of-page" >
+  <div class="searchbox">
+    <form class="form" method="POST" id="search-form" action="{% url 'personal:all_results'%}" >{%csrf_token%}
+      <input type = "text" placeholder="Search for a location..." name="query" id="id_q" class="form-control" size = "20">
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<div id="main-body-of-page">
+    <form class="form" method="POST" id="search-form" action="{% url 'personal:all_results'%}" >{%csrf_token%}
+          <div class="form-group mb-4">
+            <input size="20" type="text" name="query" id="id_q"  placeholder="What're you searching for?" aria-describedby="button-addon" class="form-control border-primary">
+          </div>
+    </form>
+</div>

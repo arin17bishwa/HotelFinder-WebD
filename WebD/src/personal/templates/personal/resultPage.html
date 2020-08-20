@@ -1,0 +1,136 @@
+{%extends 'base.html' %}
+
+{%block content%}
+
+<style type="text/css">
+    .card{
+        max-width: 1200px;
+        width: 100%;
+    }
+    .card-body{
+        padding: 20px;
+        width: 100%;
+    }
+    .blog-post-container{
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    .create-post-bar{
+        background-color: #fff;
+        margin-bottom:20px;
+    }
+
+    .left-column{
+        padding:0px;
+    }
+
+    .right-column{
+        padding:0px;
+    }
+    .lead{
+        font-size: 17px;
+    }
+</style>
+
+
+
+
+
+<div class="container">
+    <div class="row">
+      <div class="left-column col-lg-7 offset-lg-1" id="hotels">
+        Loading.....
+      </div>
+  </div>
+</div>
+
+<script>
+
+var hotels=JSON.parse("{{data|escapejs}}")
+const user_id = JSON.parse(document.getElementById('user_id').textContent);
+const ACTION_OPTIONS=['Save','Unsave']
+const hotelsElementContainer=document.getElementById('hotels')
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+function actionBtn(hotelObj,action){
+  const act=action.toLowerCase()
+  var st="<button class='btn btn-primary' onclick=handleDidAct("
+  st=st+hotelObj.id+",'"+act+"')>"+action+"</button>"
+  return st;
+}
+
+function handleDidAct(id,action){
+  if (user_id===null){
+    window.location='{%url "account:must_authenticate"%}'
+  }
+  let hotelObj=hotels[id-1]
+  hotelObj.is_saved=(hotelObj.is_saved+1)%2
+  const csrftoken = getCookie('csrftoken');
+  let url='{%url "personal:actions"%}'
+  const method='POST'
+  const data=JSON.stringify({
+    name:hotelObj.name,
+    price:hotelObj.price,
+    link:hotelObj.link,
+    action:action
+  })
+
+  const xhr=new XMLHttpRequest()
+  xhr.open(method,url)
+  xhr.setRequestHeader("Content-Type","application/json")
+  xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+  xhr.setRequestHeader("X-Requested-With","XMLHttpRequest")
+  xhr.setRequestHeader("X-CSRFToken",csrftoken)
+
+  xhr.send(data)
+  loadHotels(hotelsElementContainer,hotels)
+  return ;
+
+}
+
+function formatHotelElement(hotelObj){
+  var formattedResult='<div class="blog-post-container"><div class="container"><div class="row"><div class="card m-auto"><div class="card-body mt-2 mb-2"><h3 class="card-title" name="name">NAME:<a href="'+hotelObj.link+'" target="_blank" name="link">'+hotelObj.name+'</a> </h3><h3 class="card-text" name="price">PRICE: '+hotelObj.price+'</h3>'
+  formattedResult+=actionBtn(hotelObj,ACTION_OPTIONS[hotelObj.is_saved+0])+'</div></div></div></div></div>'
+  return formattedResult;
+}
+
+function loadHotels(hotelsElement,hotels){
+  const method='GET'
+  const url=''
+  const responseType='json'
+  const serverResponse=hotels
+  const listedItems=serverResponse
+  var finalHotelStr=''
+  for(let i=0;i<listedItems.length;i++){
+    var hotelObj=listedItems[i]
+    var cur=formatHotelElement(hotelObj)
+    finalHotelStr+=cur
+  }
+  hotelsElement.innerHTML=finalHotelStr
+}
+
+if (hotels.length>0){
+loadHotels(hotelsElementContainer,hotels);
+}
+else{
+    hotelsElementContainer.innerHTML='<h3>NOT ENOUGH RESULTS TO DISPLAY</h3>'
+}
+
+</script>
+
+{%endblock content%}

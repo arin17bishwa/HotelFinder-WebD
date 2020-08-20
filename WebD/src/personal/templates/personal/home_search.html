@@ -1,0 +1,44 @@
+{%extends 'base.html' %}
+
+{%block content%}
+
+
+<style>
+.div-wrapper {
+    height: 200px;
+    margin-top: 40px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+}
+
+.div-to-align {
+    width: 75%;
+    padding: 40px 20px;
+}
+</style>
+
+<div id="main-body-of-page">
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-10 col-md-8 col-lg-6">
+                <!-- Form -->
+                <form class="form-example" method="POST" id="search-form" action="{% url 'personal:all_results'%}" >{%csrf_token%}
+                    <!-- Input fields -->
+                    <div class="form-group">
+                        <input type="text" class="form-control username" id="id_q" placeholder="Search for a location..." name="query">
+                    </div>
+                    <!-- End input fields -->
+                </form>
+                <!-- Form end -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+document.getElementById("id_q").value="{{query}}"
+</script>
+
+{%endblock content%}
