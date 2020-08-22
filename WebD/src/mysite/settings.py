@@ -20,12 +20,11 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY ='YOUR SECRET KEY'
-
+SECRET_KEY = os.environ.get("DJ_SECRET_KEY_HOTELFINDER_WEBD")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+ALLOWED_HOSTS = ['arin17.pythonanywhere.com','127.0.0.1']
 
 HOTEL_ACTION_OPTIONS=['save','unsave']
 
