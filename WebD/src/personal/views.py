@@ -36,9 +36,7 @@ def all_results_view(request,hotels=None,*args,**kwargs):
         '''
         Write the code for the search functionality
         '''
-        with open('js.json', 'r') as f:
-            x = json.load(f)
-        hotels = list(x)
+
         hotels=hd(query)
         if user:
             already_saved = Hotel.objects.filter(saved_by=user)
