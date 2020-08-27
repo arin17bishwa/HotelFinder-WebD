@@ -1,6 +1,6 @@
 # HotelFinder-WebD
 
-This is a Django implementaion of one of my other project, a Hotel Scraper(https://github.com/arin17bishwa/glugwintermentorship)
+This is a Django implementation of one of my other projects, a Hotel Scraper(https://github.com/arin17bishwa/glugwintermentorship)
 
 During making of this project, only one scraper was working correctly(Tripadvisor), so I have used only this one scraper.
 
